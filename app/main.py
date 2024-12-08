@@ -28,8 +28,7 @@ async def get_recommendations(advertiser: str, model: str):
         if model == "TopProducts":
             cur.execute("""
                 SELECT product_id, views FROM top_products WHERE advertiser_id = %s AND date = (
-                SELECT MAX(date) FROM top_products WHERE advertiser_id = %s) ORDER BY views DESC 
-                LIMIT 1;
+                SELECT MAX(date) FROM top_products WHERE advertiser_id = %s) ORDER BY views DESC;
             """, (advertiser, advertiser))
             recommendations = cur.fetchall()
             # Formatear la respuesta
@@ -38,8 +37,7 @@ async def get_recommendations(advertiser: str, model: str):
         elif model == "TopCTR":
             cur.execute("""
                 SELECT product_id, ctr FROM top_ctr_products WHERE advertiser_id = %s AND date = (
-                SELECT MAX(date) FROM top_ctr_products WHERE advertiser_id = %s) ORDER BY ctr DESC 
-                LIMIT 1;
+                SELECT MAX(date) FROM top_ctr_products WHERE advertiser_id = %s) ORDER BY ctr DESC;
             """, (advertiser, advertiser))
             recommendations = cur.fetchall()
             # Formatear la respuesta
